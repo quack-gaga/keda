@@ -1,0 +1,23 @@
+Issue #293 — Realistic Validation item 1
+Negative control, explicit API-only opt-in with assets absent:
+COMMAND: kc console --api-only --no-browser --port 49527
+ROOT_HTTP_STATUS: 404
+SERVER_STOP_STATUS: 143
+EXPECTED_FAIL: item 1 requires the default command to refuse listening; the explicit API-only control keeps the real server listening and / returns 404, so the no-listener oracle turns red.
+Historical negative control, pre-fix real entry:
+COMMAND: uv run kc console --no-browser --port 59968 (修复前真实运行，静态目录缺失)
+OBSERVED: process printed "kc console listening", Uvicorn started, and GET / returned HTTP 404 while the static directory was absent.
+
+Fixed behavior, fresh run:
+COMMAND: UV_CACHE_DIR=tasks/evidence/issue-293/scripts/uv-cache KEDACODE_CONFIG=tasks/evidence/issue-293/scripts/rv-1-state/config.toml uv run kc console --no-browser --port 49525
+CLI_EXIT_CODE: 1
+LISTENER_PROBE_EXIT_CODE: 7
+LISTENER_HTTP_STATUS: 000
+STDOUT:
+2026-10-20 13:09:34 - backend.api.app - WARNING - app.py:85 - Console static assets not found at backend.api.static/console; the dashboard is unavailable. From a source checkout, run `just console-sync` from the repository root, or install a release wheel with the assets bundled.
+STDERR:
+Console frontend static assets are missing.
+In a source checkout, run `just console-sync` from the repository root.
+Alternatively, install a release wheel; it includes the frontend assets.
+If you only need the API, pass `kc console --api-only`.
+The web panel will be unavailable.

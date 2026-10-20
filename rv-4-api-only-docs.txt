@@ -1,0 +1,9 @@
+Issue #293 — Realistic Validation item 4
+NEGATIVE_CONTROL_COMMAND: git show e6b60d94014c3a66cc10b51f7fc9b6a03bc70d96:docs/guides/agent-runner.md > tasks/evidence/issue-293/scripts/rv-4-baseline-agent-runner.md; grep -n "api-only" tasks/evidence/issue-293/scripts/rv-4-baseline-agent-runner.md
+NEGATIVE_CONTROL_GREP_EXIT_CODE: 1
+EXPECTED_FAIL: pre-fix guide had no api-only mention and still claimed missing assets silently start API-only.
+CHECKLIST_COMMAND: grep -n "api-only" docs/guides/agent-runner.md
+CHECKLIST_GREP_EXIT_CODE: 0
+4120:kc console --api-only --no-browser
+4138:  `kc console --api-only`；此时服务会正常提供 API，但 `/` 返回 404。产物存在时，
+OBSOLETE_SILENT_FALLBACK_CLAIM: absent

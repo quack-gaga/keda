@@ -1,0 +1,29 @@
+Issue #293 — Realistic Validation item 3
+BUILD_COMMAND: just console-sync
+BUILD_RESULT: passed; src/backend/api/static/console/index.html exists.
+Negative control, assets moved away:
+COMMAND: uv run kc console --api-only --no-browser --port 49574
+ROOT_HTTP_STATUS: 404
+EXPECTED_FAIL: the item 3 oracle requiring the default panel at / to return 200 fails; with assets absent, the explicitly API-only service returns 404.
+Fixed behavior, assets restored:
+COMMAND: UV_CACHE_DIR=tasks/evidence/issue-293/scripts/uv-cache KEDACODE_CONFIG=tasks/evidence/issue-293/scripts/rv-3-state/config.toml uv run kc console --no-browser --port 49575
+ROOT_HTTP_STATUS: 200
+CONTENT_TYPE: text/html; charset=utf-8
+HTML_RESPONSE: HTML_MARKERS: <!DOCTYPE html>=True, <html=True
+WHEEL_BUILD_EXIT_CODE: 0
+WHEEL_ASSET: backend/api/static/console/index.html present
+SERVER_STOP_STATUS: 143
+STDOUT:
+kc console listening on http://127.0.0.1:49575/ (Ctrl+C to stop)
+2026-10-20 13:09:56 - backend.core.use_cases.monitor_snapshots - INFO - monitor_snapshots.py:623 - Monitor sync initial pass: 1 repositories have no snapshot yet.
+2026-10-20 13:09:56 - backend.core.use_cases.monitor_snapshots - INFO - monitor_snapshots.py:623 - Monitor sync initial pass: 1 repositories have no snapshot yet.
+INFO:     127.0.0.1:49741 - "GET / HTTP/1.1" 200 OK
+STDERR:
+INFO:     Started server process [27569]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://127.0.0.1:49575 (Press CTRL+C to quit)
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [27569]

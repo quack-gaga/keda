@@ -1,0 +1,872 @@
+# Independent verifier raw response
+# issue: #293
+# verifier agent: codex
+# builder sha: 039b6f19aa9245869467635f2fc996c7155cc1ca
+# parsed risk: yellow
+# verdict marker found: yes
+# response chars: 41610
+
+我会按独立验收来做：先读仓库规范与现有实现，随后检查 builder 提供的证据脚本是否真的有区分力，再从 `kc console` 真实入口运行缺产物、API-only、面板产物和复用实例场景，并执行每项负控。
+
+[agent tool] command: /bin/zsh -lc "pwd && git status --short && git rev-parse HEAD && sed -n '1,240p' docs/ai-standards/index.md && sed -n '1,220p' docs/ai-standards/testing.md && sed -n '1,180p' docs/ai-standards/code-reuse.md"
+
+[agent tool] command execution: /bin/zsh -lc "pwd && git status --short && git rev-parse HEAD && sed -n '1,240p' docs/ai-standards/index.md && sed -n '1,220p' docs/ai-standards/testing.md && sed -n '1,180p' docs/ai-standards/code-reuse.md"
+
+[agent tool] command: /bin/zsh -lc 'git show --stat --oneline --decorate HEAD && git show --format= -- src/backend/api/app.py src/backend/api/cli_typer_console.py docs/guides/agent-runner.md src/backend/engines/agent_runner/templates/skills/kedacode-operator/SKILL.md && rg --files tasks/evidence/issue-293 | sort && rg -n "api-only|console-static|static.*console|missing.*asset" tests src/backend/api docs/guides/agent-runner.md src/backend/engines/agent_runner/templates/skills/kedacode-operator/SKILL.md'
+
+[agent tool] command execution: /bin/zsh -lc 'git show --stat --oneline --decorate HEAD && git show --format= -- src/backend/api/app.py src/backend/api/cli_typer_console.py docs/guides/agent-runner.md src/backend/engines/agent_runner/templates/skills/kedacode-operator/SKILL.md && rg --files tasks/evidence/issue-293 | sort && rg -n "api-only|console-static|static.*console|missing.*asset" tests src/backend/api docs/guides/agent-runner.md src/backend/engines/agent_runner/templates/skills/kedacode-operator/SKILL.md'
+
+[agent tool] command: /bin/zsh -lc 'git log --oneline -8 --decorate && git show HEAD''^:src/backend/api/cli_typer_console.py | sed -n '"'210,340p' && sed -n '1,150p' src/backend/api/app.py && sed -n '200,360p' src/backend/api/cli_typer_console.py && sed -n '210,280p' tests/test_cli_console.py && sed -n '370,470p' tests/test_cli_console.py && cat tasks/evidence/issue-293/evidence.json && find tasks/evidence/issue-293 -maxdepth 3 -type f -print"
+
+[agent tool] command execution: /bin/zsh -lc 'git log --oneline -8 --decorate && git show HEAD''^:src/backend/api/cli_typer_console.py | sed -n '"'210,340p' && sed -n '1,150p' src/backend/api/app.py && sed -n '200,360p' src/backend/api/cli_typer_console.py && sed -n '210,280p' tests/test_cli_console.py && sed -n '370,470p' tests/test_cli_console.py && cat tasks/evidence/issue-293/evidence.json && find tasks/evidence/issue-293 -maxdepth 3 -type f -print"
+实现调用了 `app.py` 的资源路径 helper，并把缺产物检查放在复用实例检测之后；这是符合关键边界的。当前验收脚本和原始输出都在本地证据目录，但脚本不在 Git 提交里，我正在检查它们是否有隐藏假设（例如测试时改环境、错误清理或只断言文本），然后会实际执行相关入口和负控。
+
+[agent tool] command: /bin/zsh -lc 'for f in tasks/evidence/issue-293/scripts/rv-1-default-failure.sh tasks/evidence/issue-293/scripts/rv-2-api-only.sh tasks/evidence/issue-293/scripts/rv-3-static-panel.sh tasks/evidence/issue-293/scripts/rv-4-docs.sh; do echo "===== $f"; sed -n '"'1,260p' \""'$f"; done'
+
+[agent tool] command execution: /bin/zsh -lc 'for f in tasks/evidence/issue-293/scripts/rv-1-default-failure.sh tasks/evidence/issue-293/scripts/rv-2-api-only.sh tasks/evidence/issue-293/scripts/rv-3-static-panel.sh tasks/evidence/issue-293/scripts/rv-4-docs.sh; do echo "===== $f"; sed -n '"'1,260p' \""'$f"; done'
+
+[agent tool] command: /bin/zsh -lc 'git show --stat --oneline a960004e && git show --format= a960004e -- src/backend/api/app.py src/backend/api/cli_typer_console.py docs/guides/agent-runner.md src/backend/engines/agent_runner/templates/skills/kedacode-operator/SKILL.md tests/test_cli_console.py && for f in tasks/evidence/issue-293/rv-1-missing-assets-default-fails.txt tasks/evidence/issue-293/rv-2-api-only-starts.txt tasks/evidence/issue-293/rv-3-panel-served.txt tasks/evidence/issue-293/rv-4-api-only-docs.txt tasks/evidence/issue-293/verifier-response.txt; do echo "===== $f"; cat "$f"; done && sed -n '"'390,470p' tests/test_kedacode_operator_skill.py && rg -n \"console|--api-only|no-browser\" src/backend/engines/agent_runner/templates/skills/kedacode-operator/SKILL.md"
+
+[agent tool] command execution: /bin/zsh -lc 'git show --stat --oneline a960004e && git show --format= a960004e -- src/backend/api/app.py src/backend/api/cli_typer_console.py docs/guides/agent-runner.md src/backend/engines/agent_runner/templates/skills/kedacode-operator/SKILL.md tests/test_cli_console.py && for f in tasks/evidence/issue-293/rv-1-missing-assets-default-fails.txt tasks/evidence/issue-293/rv-2-api-only-starts.txt tasks/evidence/issue-293/rv-3-panel-served.txt tasks/evidence/issue-293/rv-4-api-only-docs.txt tasks/evidence/issue-293/verifier-response.txt; do echo "===== $f"; cat "$f"; done && sed -n '"'390,470p' tests/test_kedacode_operator_skill.py && rg -n \"console|--api-only|no-browser\" src/backend/engines/agent_runner/templates/skills/kedacode-operator/SKILL.md"
+脚本检查未发现伪造服务响应：它们启动真实 `uv run kc console` 进程并用 curl 探测 HTTP。不过证据文件只是报告文本，我不会把报告本身当作通过依据；现在开始重新运行脚本内的真实启动与负控。之后我还会单独检查静态资源存在时的 `--api-only` 语义及已有实例复用。
+
+[agent tool] command: /bin/zsh -lc 'bash tasks/evidence/issue-293/scripts/rv-1-default-failure.sh'
+
+[agent tool] command execution: /bin/zsh -lc 'bash tasks/evidence/issue-293/scripts/rv-1-default-failure.sh'
+
+[agent tool] command: /bin/zsh -lc 'bash tasks/evidence/issue-293/scripts/rv-2-api-only.sh'
+
+[agent tool] command execution: /bin/zsh -lc 'bash tasks/evidence/issue-293/scripts/rv-2-api-only.sh'
+
+[agent tool] command: /bin/zsh -lc 'bash tasks/evidence/issue-293/scripts/rv-3-static-panel.sh'
+前两项负控均按预期变红：缺产物默认启动退出 `1` 且无监听，显式 `--api-only` 负控确实监听并返回 `/` 的 `404`；API-only 正向场景版本端点是 `200`。第三项正在重新构建前端并验证面板服务，耗时比 CLI 检查长一些。
+
+[agent tool] command: /bin/zsh -lc "ps -axo pid,ppid,etime,command | rg 'console-sync|pnpm|vite|uv build|rv-3|uv run kc console' | head -40; tail -n 30 tasks/evidence/issue-293/scripts/rv-3-console-sync.log"
+
+[agent tool] command execution: /bin/zsh -lc "ps -axo pid,ppid,etime,command | rg 'console-sync|pnpm|vite|uv build|rv-3|uv run kc console' | head -40; tail -n 30 tasks/evidence/issue-293/scripts/rv-3-console-sync.log"
+
+[agent tool] command execution: /bin/zsh -lc 'bash tasks/evidence/issue-293/scripts/rv-3-static-panel.sh'
+
+[agent tool] command: /bin/zsh -lc 'bash tasks/evidence/issue-293/scripts/rv-4-docs.sh'
+
+[agent tool] command execution: /bin/zsh -lc 'bash tasks/evidence/issue-293/scripts/rv-4-docs.sh'
+四项验收脚本都已由我重新执行；各自负控都产生了预期的失败表现，文档负控也在旧版本上返回 grep `1`、当前版本返回 `0`。脚本 3 只确认 wheel 归档里有 `index.html`，没有真正从 wheel 启动服务；我会补做仓库外安装和 HTTP 请求，独立验证“发布 wheel 无需同步即可工作”。
+
+[agent tool] command: /bin/zsh -lc "rg -n \"\\[project\\.scripts\\]|kc =|kedacode =|static/console|package-data|include-package-data|backend.api.static\" pyproject.toml && sed -n '1,120p' pyproject.toml && rg -n \"Uvicorn running|find_running_console|reopen_running_console|CONSOLE_PROBE\" src/backend/api/cli_typer_console.py"
+
+[agent tool] command execution: /bin/zsh -lc "rg -n \"\\[project\\.scripts\\]|kc =|kedacode =|static/console|package-data|include-package-data|backend.api.static\" pyproject.toml && sed -n '1,120p' pyproject.toml && rg -n \"Uvicorn running|find_running_console|reopen_running_console|CONSOLE_PROBE\" src/backend/api/cli_typer_console.py"
+
+[agent tool] command: /bin/zsh -lc 'UV_CACHE_DIR=/tmp/issue293-wheel-cache uv build --wheel --out-dir /tmp/issue293-wheel-artifacts'
+
+[agent tool] command execution: /bin/zsh -lc 'UV_CACHE_DIR=/tmp/issue293-wheel-cache uv build --wheel --out-dir /tmp/issue293-wheel-artifacts'
+
+[agent tool] command: /bin/zsh -lc 'UV_CACHE_DIR=/tmp/issue293-wheel-cache uv venv --python 3.13 /tmp/issue293-wheel-run/venv'
+
+[agent tool] command execution: /bin/zsh -lc 'UV_CACHE_DIR=/tmp/issue293-wheel-cache uv venv --python 3.13 /tmp/issue293-wheel-run/venv'
+
+[agent tool] command: /bin/zsh -lc 'UV_CACHE_DIR=/tmp/issue293-wheel-cache uv pip install --python /tmp/issue293-wheel-run/venv/bin/python /tmp/issue293-wheel-artifacts/kedacode-0.4.1-py3-none-any.whl'
+
+[agent tool] command execution: /bin/zsh -lc 'UV_CACHE_DIR=/tmp/issue293-wheel-cache uv pip install --python /tmp/issue293-wheel-run/venv/bin/python /tmp/issue293-wheel-artifacts/kedacode-0.4.1-py3-none-any.whl'
+
+[agent tool] command: /bin/zsh -lc "python3 - <<'PY'
+from __future__ import annotations
+
+import os
+import socket
+import subprocess
+import time
+import urllib.error
+import urllib.request
+from pathlib import Path
+
+run_dir = Path('/tmp/issue293-wheel-run')
+state_dir = run_dir / 'state'
+state_dir.mkdir(exist_ok=True)
+with socket.socket() as probe_socket:
+    probe_socket.bind(('127.0.0.1', 0))
+    port = probe_socket.getsockname()[1]
+config_path = state_dir / 'config.toml'
+config_path.write_text(
+    f'[agent_runner.console]\\nport = {port}\\nhistory_db_path = \"{state_dir / \"console.db\"}\"\\n'
+    f'process_registry_path = \"{state_dir / \"processes.json\"}\"\\nprocess_log_dir = \"{state_dir / \"process-logs\"}\"\\n',
+    encoding='utf-8',
+)
+stdout_path = state_dir / 'stdout.log'
+stderr_path = state_dir / 'stderr.log'
+environment = os.environ.copy()
+environment['KEDACODE_CONFIG'] = str(config_path)
+process = subprocess.Popen(
+    [str(run_dir / 'venv/bin/kc'), 'console', '--no-browser', '--port', str(port)],
+    cwd=run_dir,
+    env=environment,
+    stdout=stdout_path.open('w', encoding='utf-8'),
+    stderr=stderr_path.open('w', encoding='utf-8'),
+)
+http_status = None
+content_type = None
+body = b''
+try:
+    for _ in range(100):
+        if process.poll() is not None:
+            break
+        try:
+            with urllib.request.urlopen(f'http://127.0.0.1:{port}/', timeout=1) as response:
+                http_status = response.status
+                content_type = response.headers.get('Content-Type')
+                body = response.read()
+                break
+        except (urllib.error.URLError, TimeoutError):
+            time.sleep(0.2)
+    print(f'wheel_install={run_dir / \"venv\"} cwd={run_dir}')
+    print(f'process_exit_before_probe={process.poll()} http_status={http_status} content_type={content_type}')
+    print(f'html_document={b\"<html\" in body.lower()} response_bytes={len(body)}')
+    print('stdout:')
+    print(stdout_path.read_text(encoding='utf-8'))
+    print('stderr:')
+    print(stderr_path.read_text(encoding='utf-8'))
+    if process.poll() is not None or http_status "'!= 200 or not (content_type or '"'').startswith('text/html') or b'<html' not in body.lower():
+        raise SystemExit(1)
+finally:
+    if process.poll() is None:
+        process.terminate()
+        try:
+            process.wait(timeout=10)
+        except subprocess.TimeoutExpired:
+            process.kill()
+            process.wait(timeout=10)
+PY"
+
+[agent tool] command execution: /bin/zsh -lc "python3 - <<'PY'
+from __future__ import annotations
+
+import os
+import socket
+import subprocess
+import time
+import urllib.error
+import urllib.request
+from pathlib import Path
+
+run_dir = Path('/tmp/issue293-wheel-run')
+state_dir = run_dir / 'state'
+state_dir.mkdir(exist_ok=True)
+with socket.socket() as probe_socket:
+    probe_socket.bind(('127.0.0.1', 0))
+    port = probe_socket.getsockname()[1]
+config_path = state_dir / 'config.toml'
+config_path.write_text(
+    f'[agent_runner.console]\\nport = {port}\\nhistory_db_path = \"{state_dir / \"console.db\"}\"\\n'
+    f'process_registry_path = \"{state_dir / \"processes.json\"}\"\\nprocess_log_dir = \"{state_dir / \"process-logs\"}\"\\n',
+    encoding='utf-8',
+)
+stdout_path = state_dir / 'stdout.log'
+stderr_path = state_dir / 'stderr.log'
+environment = os.environ.copy()
+environment['KEDACODE_CONFIG'] = str(config_path)
+process = subprocess.Popen(
+    [str(run_dir / 'venv/bin/kc'), 'console', '--no-browser', '--port', str(port)],
+    cwd=run_dir,
+    env=environment,
+    stdout=stdout_path.open('w', encoding='utf-8'),
+    stderr=stderr_path.open('w', encoding='utf-8'),
+)
+http_status = None
+content_type = None
+body = b''
+try:
+    for _ in range(100):
+        if process.poll() is not None:
+            break
+        try:
+            with urllib.request.urlopen(f'http://127.0.0.1:{port}/', timeout=1) as response:
+                http_status = response.status
+                content_type = response.headers.get('Content-Type')
+                body = response.read()
+                break
+        except (urllib.error.URLError, TimeoutError):
+            time.sleep(0.2)
+    print(f'wheel_install={run_dir / \"venv\"} cwd={run_dir}')
+    print(f'process_exit_before_probe={process.poll()} http_status={http_status} content_type={content_type}')
+    print(f'html_document={b\"<html\" in body.lower()} response_bytes={len(body)}')
+    print('stdout:')
+    print(stdout_path.read_text(encoding='utf-8'))
+    print('stderr:')
+    print(stderr_path.read_text(encoding='utf-8'))
+    if process.poll() is not None or http_status "'!= 200 or not (content_type or '"'').startswith('text/html') or b'<html' not in body.lower():
+        raise SystemExit(1)
+finally:
+    if process.poll() is None:
+        process.terminate()
+        try:
+            process.wait(timeout=10)
+        except subprocess.TimeoutExpired:
+            process.kill()
+            process.wait(timeout=10)
+PY"
+
+[agent tool] command: /bin/zsh -lc "python3 - <<'PY'
+from __future__ import annotations
+
+import os
+import socket
+import subprocess
+import time
+import urllib.error
+import urllib.request
+from pathlib import Path
+
+repo_dir = Path.cwd()
+asset_dir = repo_dir / 'src/backend/api/static/console'
+asset_backup = repo_dir / 'src/backend/api/static/console.issue293-reuse-backup'
+state_dir = Path('/tmp/issue293-reuse-check')
+state_dir.mkdir(exist_ok=True)
+if asset_backup.exists() or not asset_dir.is_dir():
+    raise SystemExit('static directory missing or stale backup exists')
+with socket.socket() as probe_socket:
+    probe_socket.bind(('127.0.0.1', 0))
+    port = probe_socket.getsockname()[1]
+config_path = state_dir / 'config.toml'
+config_path.write_text(
+    f'[agent_runner.console]\\nport = {port}\\nhistory_db_path = \"{state_dir / \"console.db\"}\"\\n'
+    f'process_registry_path = \"{state_dir / \"processes.json\"}\"\\nprocess_log_dir = \"{state_dir / \"process-logs\"}\"\\n',
+    encoding='utf-8',
+)
+environment = os.environ.copy()
+environment['KEDACODE_CONFIG'] = str(config_path)
+environment['UV_CACHE_DIR'] = '/tmp/issue293-wheel-cache'
+asset_dir.rename(asset_backup)
+server_process = None
+try:
+    server_process = subprocess.Popen(
+        ['uv', 'run', 'kc', 'console', '--api-only', '--no-browser', '--port', str(port)],
+        cwd=repo_dir,
+        env=environment,
+        stdout=(state_dir / 'api-only.stdout').open('w', encoding='utf-8'),
+        stderr=(state_dir / 'api-only.stderr').open('w', encoding='utf-8'),
+    )
+    api_status = None
+    for _ in range(100):
+        if server_process.poll() is not None:
+            break
+        try:
+            with urllib.request.urlopen(f'http://127.0.0.1:{port}/api/v1/agent-runner/console/version', timeout=1) as response:
+                api_status = response.status
+                api_body = response.read().decode('utf-8')
+                break
+        except (urllib.error.URLError, TimeoutError):
+            time.sleep(0.2)
+    with urllib.request.urlopen(f'http://127.0.0.1:{port}/', timeout=2) as response:
+        root_status = response.status
+except urllib.error.HTTPError as response:
+    root_status = response.code
+    api_body = locals().get('api_body', '')
+reuse = subprocess.run(
+    ['uv', 'run', 'kc', 'console', '--no-browser', '--port', str(port)],
+    cwd=repo_dir,
+    env=environment,
+    capture_output=True,
+    text=True,
+    timeout=20,
+    check=False,
+)
+print(f'assets_absent=yes api_only_start_exit={server_process.poll()} api_status={api_status} root_status={root_status}')
+print(f'reuse_exit={reuse.returncode} reuse_output={reuse.stdout.strip()}')
+print(f'reuse_stderr={reuse.stderr.strip()}')
+if api_status "'!= 200 or root_status != 404 or reuse.returncode != 0 or '"'already running' not in reuse.stdout.lower():
+    raise SystemExit(1)
+finally:
+    if server_process is not None and server_process.poll() is None:
+        server_process.terminate()
+        try:
+            server_process.wait(timeout=10)
+        except subprocess.TimeoutExpired:
+            server_process.kill()
+            server_process.wait(timeout=10)
+    if asset_backup.is_dir():
+        asset_backup.rename(asset_dir)
+PY"
+
+[agent tool] command execution: /bin/zsh -lc "python3 - <<'PY'
+from __future__ import annotations
+
+import os
+import socket
+import subprocess
+import time
+import urllib.error
+import urllib.request
+from pathlib import Path
+
+repo_dir = Path.cwd()
+asset_dir = repo_dir / 'src/backend/api/static/console'
+asset_backup = repo_dir / 'src/backend/api/static/console.issue293-reuse-backup'
+state_dir = Path('/tmp/issue293-reuse-check')
+state_dir.mkdir(exist_ok=True)
+if asset_backup.exists() or not asset_dir.is_dir():
+    raise SystemExit('static directory missing or stale backup exists')
+with socket.socket() as probe_socket:
+    probe_socket.bind(('127.0.0.1', 0))
+    port = probe_socket.getsockname()[1]
+config_path = state_dir / 'config.toml'
+config_path.write_text(
+    f'[agent_runner.console]\\nport = {port}\\nhistory_db_path = \"{state_dir / \"console.db\"}\"\\n'
+    f'process_registry_path = \"{state_dir / \"processes.json\"}\"\\nprocess_log_dir = \"{state_dir / \"process-logs\"}\"\\n',
+    encoding='utf-8',
+)
+environment = os.environ.copy()
+environment['KEDACODE_CONFIG'] = str(config_path)
+environment['UV_CACHE_DIR'] = '/tmp/issue293-wheel-cache'
+asset_dir.rename(asset_backup)
+server_process = None
+try:
+    server_process = subprocess.Popen(
+        ['uv', 'run', 'kc', 'console', '--api-only', '--no-browser', '--port', str(port)],
+        cwd=repo_dir,
+        env=environment,
+        stdout=(state_dir / 'api-only.stdout').open('w', encoding='utf-8'),
+        stderr=(state_dir / 'api-only.stderr').open('w', encoding='utf-8'),
+    )
+    api_status = None
+    for _ in range(100):
+        if server_process.poll() is not None:
+            break
+        try:
+            with urllib.request.urlopen(f'http://127.0.0.1:{port}/api/v1/agent-runner/console/version', timeout=1) as response:
+                api_status = response.status
+                api_body = response.read().decode('utf-8')
+                break
+        except (urllib.error.URLError, TimeoutError):
+            time.sleep(0.2)
+    with urllib.request.urlopen(f'http://127.0.0.1:{port}/', timeout=2) as response:
+        root_status = response.status
+except urllib.error.HTTPError as response:
+    root_status = response.code
+    api_body = locals().get('api_body', '')
+reuse = subprocess.run(
+    ['uv', 'run', 'kc', 'console', '--no-browser', '--port', str(port)],
+    cwd=repo_dir,
+    env=environment,
+    capture_output=True,
+    text=True,
+    timeout=20,
+    check=False,
+)
+print(f'assets_absent=yes api_only_start_exit={server_process.poll()} api_status={api_status} root_status={root_status}')
+print(f'reuse_exit={reuse.returncode} reuse_output={reuse.stdout.strip()}')
+print(f'reuse_stderr={reuse.stderr.strip()}')
+if api_status "'!= 200 or root_status != 404 or reuse.returncode != 0 or '"'already running' not in reuse.stdout.lower():
+    raise SystemExit(1)
+finally:
+    if server_process is not None and server_process.poll() is None:
+        server_process.terminate()
+        try:
+            server_process.wait(timeout=10)
+        except subprocess.TimeoutExpired:
+            server_process.kill()
+            server_process.wait(timeout=10)
+    if asset_backup.is_dir():
+        asset_backup.rename(asset_dir)
+PY"
+wheel 隔离验证通过：从 `/tmp` 中安装 wheel 后启动 `kc console`，根路径返回 `200 text/html` 和 HTML，未依赖源码仓库的静态目录。刚才的实例复用探测脚本在运行前因我编写的临时 Python 代码语法错误而没有触碰静态目录；我正在修正脚本后重跑这一探测。
+
+[agent tool] command: /bin/zsh -lc "python3 - <<'PY'
+from __future__ import annotations
+
+import os
+import socket
+import subprocess
+import time
+import urllib.error
+import urllib.request
+from pathlib import Path
+
+repo_dir = Path.cwd()
+asset_dir = repo_dir / 'src/backend/api/static/console'
+asset_backup = repo_dir / 'src/backend/api/static/console.issue293-reuse-backup'
+state_dir = Path('/tmp/issue293-reuse-check')
+state_dir.mkdir(exist_ok=True)
+if asset_backup.exists() or not asset_dir.is_dir():
+    raise SystemExit('static directory missing or stale backup exists')
+with socket.socket() as probe_socket:
+    probe_socket.bind(('127.0.0.1', 0))
+    port = probe_socket.getsockname()[1]
+config_path = state_dir / 'config.toml'
+config_path.write_text(
+    f'[agent_runner.console]\\nport = {port}\\nhistory_db_path = \"{state_dir / \"console.db\"}\"\\n'
+    f'process_registry_path = \"{state_dir / \"processes.json\"}\"\\nprocess_log_dir = \"{state_dir / \"process-logs\"}\"\\n',
+    encoding='utf-8',
+)
+environment = os.environ.copy()
+environment['KEDACODE_CONFIG'] = str(config_path)
+environment['UV_CACHE_DIR'] = '/tmp/issue293-wheel-cache'
+asset_dir.rename(asset_backup)
+server_process = None
+try:
+    server_process = subprocess.Popen(
+        ['uv', 'run', 'kc', 'console', '--api-only', '--no-browser', '--port', str(port)],
+        cwd=repo_dir,
+        env=environment,
+        stdout=(state_dir / 'api-only.stdout').open('w', encoding='utf-8'),
+        stderr=(state_dir / 'api-only.stderr').open('w', encoding='utf-8'),
+    )
+    api_status = None
+    api_body = ''
+    for _ in range(100):
+        if server_process.poll() is not None:
+            break
+        try:
+            with urllib.request.urlopen(f'http://127.0.0.1:{port}/api/v1/agent-runner/console/version', timeout=1) as response:
+                api_status = response.status
+                api_body = response.read().decode('utf-8')
+                break
+        except (urllib.error.URLError, TimeoutError):
+            time.sleep(0.2)
+    try:
+        with urllib.request.urlopen(f'http://127.0.0.1:{port}/', timeout=2) as response:
+            root_status = response.status
+    except urllib.error.HTTPError as response:
+        root_status = response.code
+    reuse = subprocess.run(
+        ['uv', 'run', 'kc', 'console', '--no-browser', '--port', str(port)],
+        cwd=repo_dir,
+        env=environment,
+        capture_output=True,
+        text=True,
+        timeout=20,
+        check=False,
+    )
+    print(f'assets_absent=yes api_only_start_exit={server_process.poll()} api_status={api_status} root_status={root_status}')
+    print(f'version_json={api_body}')
+    print(f'reuse_exit={reuse.returncode} reuse_output={reuse.stdout.strip()}')
+    print(f'reuse_stderr={reuse.stderr.strip()}')
+    if api_status "'!= 200 or root_status != 404 or reuse.returncode != 0 or '"'already running' not in reuse.stdout.lower():
+        raise SystemExit(1)
+finally:
+    if server_process is not None and server_process.poll() is None:
+        server_process.terminate()
+        try:
+            server_process.wait(timeout=10)
+        except subprocess.TimeoutExpired:
+            server_process.kill()
+            server_process.wait(timeout=10)
+    if asset_backup.is_dir():
+        asset_backup.rename(asset_dir)
+PY"
+
+[agent tool] command execution: /bin/zsh -lc "python3 - <<'PY'
+from __future__ import annotations
+
+import os
+import socket
+import subprocess
+import time
+import urllib.error
+import urllib.request
+from pathlib import Path
+
+repo_dir = Path.cwd()
+asset_dir = repo_dir / 'src/backend/api/static/console'
+asset_backup = repo_dir / 'src/backend/api/static/console.issue293-reuse-backup'
+state_dir = Path('/tmp/issue293-reuse-check')
+state_dir.mkdir(exist_ok=True)
+if asset_backup.exists() or not asset_dir.is_dir():
+    raise SystemExit('static directory missing or stale backup exists')
+with socket.socket() as probe_socket:
+    probe_socket.bind(('127.0.0.1', 0))
+    port = probe_socket.getsockname()[1]
+config_path = state_dir / 'config.toml'
+config_path.write_text(
+    f'[agent_runner.console]\\nport = {port}\\nhistory_db_path = \"{state_dir / \"console.db\"}\"\\n'
+    f'process_registry_path = \"{state_dir / \"processes.json\"}\"\\nprocess_log_dir = \"{state_dir / \"process-logs\"}\"\\n',
+    encoding='utf-8',
+)
+environment = os.environ.copy()
+environment['KEDACODE_CONFIG'] = str(config_path)
+environment['UV_CACHE_DIR'] = '/tmp/issue293-wheel-cache'
+asset_dir.rename(asset_backup)
+server_process = None
+try:
+    server_process = subprocess.Popen(
+        ['uv', 'run', 'kc', 'console', '--api-only', '--no-browser', '--port', str(port)],
+        cwd=repo_dir,
+        env=environment,
+        stdout=(state_dir / 'api-only.stdout').open('w', encoding='utf-8'),
+        stderr=(state_dir / 'api-only.stderr').open('w', encoding='utf-8'),
+    )
+    api_status = None
+    api_body = ''
+    for _ in range(100):
+        if server_process.poll() is not None:
+            break
+        try:
+            with urllib.request.urlopen(f'http://127.0.0.1:{port}/api/v1/agent-runner/console/version', timeout=1) as response:
+                api_status = response.status
+                api_body = response.read().decode('utf-8')
+                break
+        except (urllib.error.URLError, TimeoutError):
+            time.sleep(0.2)
+    try:
+        with urllib.request.urlopen(f'http://127.0.0.1:{port}/', timeout=2) as response:
+            root_status = response.status
+    except urllib.error.HTTPError as response:
+        root_status = response.code
+    reuse = subprocess.run(
+        ['uv', 'run', 'kc', 'console', '--no-browser', '--port', str(port)],
+        cwd=repo_dir,
+        env=environment,
+        capture_output=True,
+        text=True,
+        timeout=20,
+        check=False,
+    )
+    print(f'assets_absent=yes api_only_start_exit={server_process.poll()} api_status={api_status} root_status={root_status}')
+    print(f'version_json={api_body}')
+    print(f'reuse_exit={reuse.returncode} reuse_output={reuse.stdout.strip()}')
+    print(f'reuse_stderr={reuse.stderr.strip()}')
+    if api_status "'!= 200 or root_status != 404 or reuse.returncode != 0 or '"'already running' not in reuse.stdout.lower():
+        raise SystemExit(1)
+finally:
+    if server_process is not None and server_process.poll() is None:
+        server_process.terminate()
+        try:
+            server_process.wait(timeout=10)
+        except subprocess.TimeoutExpired:
+            server_process.kill()
+            server_process.wait(timeout=10)
+    if asset_backup.is_dir():
+        asset_backup.rename(asset_dir)
+PY"
+
+[agent tool] command: /bin/zsh -lc 'UV_CACHE_DIR=/tmp/issue293-wheel-cache uv run kc console --no-browser --port not-a-port'
+
+[agent tool] command execution: /bin/zsh -lc 'UV_CACHE_DIR=/tmp/issue293-wheel-cache uv run kc console --no-browser --port not-a-port'
+
+[agent tool] command: /bin/zsh -lc "python3 - <<'PY'
+from __future__ import annotations
+
+import os
+import socket
+import subprocess
+import time
+import urllib.request
+from pathlib import Path
+
+repo_dir = Path.cwd()
+state_dir = Path('/tmp/issue293-api-only-assets-present')
+state_dir.mkdir(exist_ok=True)
+with socket.socket() as probe_socket:
+    probe_socket.bind(('127.0.0.1', 0))
+    port = probe_socket.getsockname()[1]
+config_path = state_dir / 'config.toml'
+config_path.write_text(
+    f'[agent_runner.console]\\nport = {port}\\nhistory_db_path = \"{state_dir / \"console.db\"}\"\\n'
+    f'process_registry_path = \"{state_dir / \"processes.json\"}\"\\nprocess_log_dir = \"{state_dir / \"process-logs\"}\"\\n',
+    encoding='utf-8',
+)
+environment = os.environ.copy()
+environment['KEDACODE_CONFIG'] = str(config_path)
+environment['UV_CACHE_DIR'] = '/tmp/issue293-wheel-cache'
+stdout_path = state_dir / 'stdout.log'
+stderr_path = state_dir / 'stderr.log'
+process = subprocess.Popen(
+    ['uv', 'run', 'kc', 'console', '--api-only', '--no-browser', '--port', str(port)],
+    cwd=repo_dir,
+    env=environment,
+    stdout=stdout_path.open('w', encoding='utf-8'),
+    stderr=stderr_path.open('w', encoding='utf-8'),
+)
+try:
+    results = {}
+    for endpoint in ('/', '/api/v1/agent-runner/console/version'):
+        for _ in range(100):
+            if process.poll() is not None:
+                break
+            try:
+                with urllib.request.urlopen(f'http://127.0.0.1:{port}{endpoint}', timeout=1) as response:
+                    body = response.read()
+                    results[endpoint] = (response.status, response.headers.get('Content-Type'), body)
+                    break
+            except Exception:
+                time.sleep(0.2)
+    print(f'assets_present={Path(\"src/backend/api/static/console/index.html\").is_file()} api_only=yes')
+    for endpoint, (status, content_type, body) in results.items():
+        print(f'{endpoint}: status={status} content_type={content_type} html={b\"<html\" in body.lower()} bytes={len(body)}')
+    if process.poll() is not None or results.get('/', (None,))[0] "'!= 200:
+        raise SystemExit(1)
+finally:
+    if process.poll() is None:
+        process.terminate()
+        try:
+            process.wait(timeout=10)
+        except subprocess.TimeoutExpired:
+            process.kill()
+            process.wait(timeout=10)
+PY'
+
+[agent tool] command execution: /bin/zsh -lc "python3 - <<'PY'
+from __future__ import annotations
+
+import os
+import socket
+import subprocess
+import time
+import urllib.request
+from pathlib import Path
+
+repo_dir = Path.cwd()
+state_dir = Path('/tmp/issue293-api-only-assets-present')
+state_dir.mkdir(exist_ok=True)
+with socket.socket() as probe_socket:
+    probe_socket.bind(('127.0.0.1', 0))
+    port = probe_socket.getsockname()[1]
+config_path = state_dir / 'config.toml'
+config_path.write_text(
+    f'[agent_runner.console]\\nport = {port}\\nhistory_db_path = \"{state_dir / \"console.db\"}\"\\n'
+    f'process_registry_path = \"{state_dir / \"processes.json\"}\"\\nprocess_log_dir = \"{state_dir / \"process-logs\"}\"\\n',
+    encoding='utf-8',
+)
+environment = os.environ.copy()
+environment['KEDACODE_CONFIG'] = str(config_path)
+environment['UV_CACHE_DIR'] = '/tmp/issue293-wheel-cache'
+stdout_path = state_dir / 'stdout.log'
+stderr_path = state_dir / 'stderr.log'
+process = subprocess.Popen(
+    ['uv', 'run', 'kc', 'console', '--api-only', '--no-browser', '--port', str(port)],
+    cwd=repo_dir,
+    env=environment,
+    stdout=stdout_path.open('w', encoding='utf-8'),
+    stderr=stderr_path.open('w', encoding='utf-8'),
+)
+try:
+    results = {}
+    for endpoint in ('/', '/api/v1/agent-runner/console/version'):
+        for _ in range(100):
+            if process.poll() is not None:
+                break
+            try:
+                with urllib.request.urlopen(f'http://127.0.0.1:{port}{endpoint}', timeout=1) as response:
+                    body = response.read()
+                    results[endpoint] = (response.status, response.headers.get('Content-Type'), body)
+                    break
+            except Exception:
+                time.sleep(0.2)
+    print(f'assets_present={Path(\"src/backend/api/static/console/index.html\").is_file()} api_only=yes')
+    for endpoint, (status, content_type, body) in results.items():
+        print(f'{endpoint}: status={status} content_type={content_type} html={b\"<html\" in body.lower()} bytes={len(body)}')
+    if process.poll() is not None or results.get('/', (None,))[0] "'!= 200:
+        raise SystemExit(1)
+finally:
+    if process.poll() is None:
+        process.terminate()
+        try:
+            process.wait(timeout=10)
+        except subprocess.TimeoutExpired:
+            process.kill()
+            process.wait(timeout=10)
+PY'
+复用边界也通过真实进程确认：缺产物时已有 API-only 实例继续提供版本 API，默认命令识别并复用该实例，以 `0` 退出，没有因本机缺少面板文件而误拒绝。非法 `--port not-a-port` 则由 Typer 在启动前以退出码 `2` 拒绝。接下来我会探测部分构建目录（目录存在但缺 `index.html`）是否也会被当成有效面板。
+
+[agent tool] command: /bin/zsh -lc "python3 - <<'PY'
+from __future__ import annotations
+
+import os
+import socket
+import subprocess
+import time
+import urllib.error
+import urllib.request
+from pathlib import Path
+
+repo_dir = Path.cwd()
+asset_dir = repo_dir / 'src/backend/api/static/console'
+asset_backup = repo_dir / 'src/backend/api/static/console.issue293-empty-backup'
+state_dir = Path('/tmp/issue293-empty-assets-probe')
+state_dir.mkdir(exist_ok=True)
+if asset_backup.exists() or not (asset_dir / 'index.html').is_file():
+    raise SystemExit('static panel missing or stale backup exists')
+with socket.socket() as probe_socket:
+    probe_socket.bind(('127.0.0.1', 0))
+    port = probe_socket.getsockname()[1]
+config_path = state_dir / 'config.toml'
+config_path.write_text(
+    f'[agent_runner.console]\\nport = {port}\\nhistory_db_path = \"{state_dir / \"console.db\"}\"\\n'
+    f'process_registry_path = \"{state_dir / \"processes.json\"}\"\\nprocess_log_dir = \"{state_dir / \"process-logs\"}\"\\n',
+    encoding='utf-8',
+)
+environment = os.environ.copy()
+environment['KEDACODE_CONFIG'] = str(config_path)
+environment['UV_CACHE_DIR'] = '/tmp/issue293-wheel-cache'
+asset_dir.rename(asset_backup)
+asset_dir.mkdir()
+process = None
+try:
+    process = subprocess.Popen(
+        ['uv', 'run', 'kc', 'console', '--no-browser', '--port', str(port)],
+        cwd=repo_dir,
+        env=environment,
+        stdout=(state_dir / 'stdout.log').open('w', encoding='utf-8'),
+        stderr=(state_dir / 'stderr.log').open('w', encoding='utf-8'),
+    )
+    root_status = None
+    root_content_type = None
+    for _ in range(100):
+        if process.poll() is not None:
+            break
+        try:
+            with urllib.request.urlopen(f'http://127.0.0.1:{port}/', timeout=1) as response:
+                root_status = response.status
+                root_content_type = response.headers.get('Content-Type')
+                break
+        except urllib.error.HTTPError as response:
+            root_status = response.code
+            root_content_type = response.headers.get('Content-Type')
+            break
+        except (urllib.error.URLError, TimeoutError):
+            time.sleep(0.2)
+    try:
+        with urllib.request.urlopen(f'http://127.0.0.1:{port}/api/v1/agent-runner/console/version', timeout=2) as response:
+            api_status = response.status
+    except urllib.error.HTTPError as response:
+        api_status = response.code
+    print(f'empty_static_dir_exists={asset_dir.is_dir()} index_html_exists={(asset_dir / \"index.html\").is_file()}')
+    print(f'default_cli_exit_while_serving={process.poll()} root_status={root_status} root_content_type={root_content_type} api_status={api_status}')
+    print((state_dir / 'stdout.log').read_text(encoding='utf-8'))
+    print((state_dir / 'stderr.log').read_text(encoding='utf-8'))
+    if process.poll() is not None or root_status "'!= 404 or api_status != 200:
+        raise SystemExit(1)
+finally:
+    if process is not None and process.poll() is None:
+        process.terminate()
+        try:
+            process.wait(timeout=10)
+        except subprocess.TimeoutExpired:
+            process.kill()
+            process.wait(timeout=10)
+    if asset_dir.exists():
+        asset_dir.rmdir()
+    if asset_backup.is_dir():
+        asset_backup.rename(asset_dir)
+PY'
+
+[agent tool] command execution: /bin/zsh -lc "python3 - <<'PY'
+from __future__ import annotations
+
+import os
+import socket
+import subprocess
+import time
+import urllib.error
+import urllib.request
+from pathlib import Path
+
+repo_dir = Path.cwd()
+asset_dir = repo_dir / 'src/backend/api/static/console'
+asset_backup = repo_dir / 'src/backend/api/static/console.issue293-empty-backup'
+state_dir = Path('/tmp/issue293-empty-assets-probe')
+state_dir.mkdir(exist_ok=True)
+if asset_backup.exists() or not (asset_dir / 'index.html').is_file():
+    raise SystemExit('static panel missing or stale backup exists')
+with socket.socket() as probe_socket:
+    probe_socket.bind(('127.0.0.1', 0))
+    port = probe_socket.getsockname()[1]
+config_path = state_dir / 'config.toml'
+config_path.write_text(
+    f'[agent_runner.console]\\nport = {port}\\nhistory_db_path = \"{state_dir / \"console.db\"}\"\\n'
+    f'process_registry_path = \"{state_dir / \"processes.json\"}\"\\nprocess_log_dir = \"{state_dir / \"process-logs\"}\"\\n',
+    encoding='utf-8',
+)
+environment = os.environ.copy()
+environment['KEDACODE_CONFIG'] = str(config_path)
+environment['UV_CACHE_DIR'] = '/tmp/issue293-wheel-cache'
+asset_dir.rename(asset_backup)
+asset_dir.mkdir()
+process = None
+try:
+    process = subprocess.Popen(
+        ['uv', 'run', 'kc', 'console', '--no-browser', '--port', str(port)],
+        cwd=repo_dir,
+        env=environment,
+        stdout=(state_dir / 'stdout.log').open('w', encoding='utf-8'),
+        stderr=(state_dir / 'stderr.log').open('w', encoding='utf-8'),
+    )
+    root_status = None
+    root_content_type = None
+    for _ in range(100):
+        if process.poll() is not None:
+            break
+        try:
+            with urllib.request.urlopen(f'http://127.0.0.1:{port}/', timeout=1) as response:
+                root_status = response.status
+                root_content_type = response.headers.get('Content-Type')
+                break
+        except urllib.error.HTTPError as response:
+            root_status = response.code
+            root_content_type = response.headers.get('Content-Type')
+            break
+        except (urllib.error.URLError, TimeoutError):
+            time.sleep(0.2)
+    try:
+        with urllib.request.urlopen(f'http://127.0.0.1:{port}/api/v1/agent-runner/console/version', timeout=2) as response:
+            api_status = response.status
+    except urllib.error.HTTPError as response:
+        api_status = response.code
+    print(f'empty_static_dir_exists={asset_dir.is_dir()} index_html_exists={(asset_dir / \"index.html\").is_file()}')
+    print(f'default_cli_exit_while_serving={process.poll()} root_status={root_status} root_content_type={root_content_type} api_status={api_status}')
+    print((state_dir / 'stdout.log').read_text(encoding='utf-8'))
+    print((state_dir / 'stderr.log').read_text(encoding='utf-8'))
+    if process.poll() is not None or root_status "'!= 404 or api_status != 200:
+        raise SystemExit(1)
+finally:
+    if process is not None and process.poll() is None:
+        process.terminate()
+        try:
+            process.wait(timeout=10)
+        except subprocess.TimeoutExpired:
+            process.kill()
+            process.wait(timeout=10)
+    if asset_dir.exists():
+        asset_dir.rmdir()
+    if asset_backup.is_dir():
+        asset_backup.rename(asset_dir)
+PY'
+空目录探测暴露了一个边界：目录存在但缺少 `index.html` 时，默认命令仍开始监听，`/` 返回 `404`，版本 API 返回 `200`。这不同于验收脚本覆盖的“整个目录不存在”情形；我会把它作为部分/不完整静态产物的残余缺口记录。现在我在补跑相关回归测试，并检查文件恢复与工作树状态。
+
+[agent tool] command: /bin/zsh -lc 'UV_CACHE_DIR=/tmp/issue293-wheel-cache uv run pytest tests/test_cli_console.py tests/test_agent_runner_console_api.py tests/test_kedacode_operator_skill.py -q --no-testmon'
+
+[agent tool] command execution: /bin/zsh -lc 'UV_CACHE_DIR=/tmp/issue293-wheel-cache uv run pytest tests/test_cli_console.py tests/test_agent_runner_console_api.py tests/test_kedacode_operator_skill.py -q --no-testmon'
+
+[agent tool] command: /bin/zsh -lc 'test -f src/backend/api/static/console/index.html && test ! -e src/backend/api/static/console.issue293-reuse-backup && test ! -e src/backend/api/static/console.issue293-empty-backup && echo '"'static_asset_restored=yes; temporary_backups=none' && find src/backend/api/static/console -maxdepth 1 -type f | wc -l"
+
+[agent tool] command execution: /bin/zsh -lc 'test -f src/backend/api/static/console/index.html && test ! -e src/backend/api/static/console.issue293-reuse-backup && test ! -e src/backend/api/static/console.issue293-empty-backup && echo '"'static_asset_restored=yes; temporary_backups=none' && find src/backend/api/static/console -maxdepth 1 -type f | wc -l"
+
+[agent tool] command: /bin/zsh -lc 'git status --short && git diff --check HEAD''^ HEAD'
+
+[agent tool] command execution: /bin/zsh -lc 'git status --short && git diff --check HEAD''^ HEAD'
+
+[agent tool] command: /bin/zsh -lc "UV_CACHE_DIR=/tmp/issue293-wheel-cache uv run kc console --help | rg -n -A2 -- '--api-only|--no-browser|--port'"
+
+[agent tool] command execution: /bin/zsh -lc "UV_CACHE_DIR=/tmp/issue293-wheel-cache uv run kc console --help | rg -n -A2 -- '--api-only|--no-browser|--port'"
+## 判定：Yellow
+
+缺少整个静态目录时的目标行为已通过真实入口和负控验证；我发现一个范围外但相关的残余缺口：静态目录存在、但没有 `index.html` 时，默认命令仍会启动并让 `/` 返回 404。
+
+### 真实入口与负控
+
+我重新运行了四项验收脚本及各自负控：
+
+- RV-1：移走静态目录后，默认命令退出码为 `1`，stderr 给出 `just console-sync`、发布 wheel 和 `--api-only` 修复路径；监听探测为 HTTP `000`。API-only 负控保持监听，`/` 返回 `404`。
+- RV-2：缺产物且省略 `--api-only` 时，命令退出 `1`，版本端点不可连接；显式 `--api-only` 启动后，版本端点返回 HTTP `200` 和含 `version` 的 JSON。
+- RV-3：`just console-sync` 后默认启动的 `/` 返回 `200 text/html`，响应是 HTML；移走静态目录的负控返回 `404`。我还把构建出的 wheel 安装到仓库外的隔离环境，从 `/tmp` 启动真实 `kc console`，根路径返回 `200 text/html` 和 HTML。
+- RV-4：修复前文档的 `api-only` grep 退出码为 `1`，当前文档为 `0`，旧的默认静默降级说明已删除。
+
+报告文件：[RV-1](</Users/zata/code/keda/.iar-worktrees/issue-293/tasks/evidence/issue-293/rv-1-missing-assets-default-fails.txt>)、[RV-2](</Users/zata/code/keda/.iar-worktrees/issue-293/tasks/evidence/issue-293/rv-2-api-only-starts.txt>)、[RV-3](</Users/zata/code/keda/.iar-worktrees/issue-293/tasks/evidence/issue-293/rv-3-panel-served.txt>)、[RV-4](</Users/zata/code/keda/.iar-worktrees/issue-293/tasks/evidence/issue-293/rv-4-api-only-docs.txt>)。我检查了这些文本报告、`evidence.json` 和脚本；证据目录没有图像、视频或音频文件。
+
+### 额外检查与缺口
+
+- 缺产物时已有 API-only 服务仍能提供版本 API；再次运行默认 `kc console` 会复用实例并以 `0` 退出。未因本机缺少静态目录而错误拒绝复用。
+- 静态产物存在时运行 `kc console --api-only`，面板仍返回 HTTP `200`，与当前帮助文本“已有产物时保留面板”的说明一致。非法端口 `not-a-port` 在启动前以退出码 `2` 被拒绝。
+- `console_static_dir()` 使用包资源路径；挂载逻辑和 CLI 预检共同调用它。app import 时的 warning 仍保留。相关回归测试通过：`101 passed`。
+- **残余缺口：** 我临时用空目录替代静态面板目录后运行默认命令，进程仍开始监听，版本 API 返回 `200`，而 `/` 返回 `404`。当前判断只检查目录是否存在，因此部分或不完整的静态产物仍可能重现用户看到 404 的问题。这不影响“静态目录完全缺失”的验收路径，但让更广义的“产物缺失”检查不够完整。
+- 结束时静态产物已恢复，临时备份不存在；工作树干净，`git diff --check` 通过。
+
+<!-- iar:verifier-verdict risk=yellow -->

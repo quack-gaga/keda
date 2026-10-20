@@ -1,0 +1,27 @@
+Issue #293 — Realistic Validation item 2
+Negative control, same missing-assets condition without the opt-in:
+COMMAND: uv run kc console --no-browser --port 49553
+CLI_EXIT_CODE: 1
+VERSION_CURL_EXIT_CODE: 7
+VERSION_HTTP_STATUS: 000
+EXPECTED_FAIL: without --api-only, the command exits 1 before listening and the version endpoint cannot return JSON.
+Fixed behavior with explicit API-only mode:
+COMMAND: UV_CACHE_DIR=tasks/evidence/issue-293/scripts/uv-cache KEDACODE_CONFIG=tasks/evidence/issue-293/scripts/rv-2-state/config.toml uv run kc console --api-only --no-browser --port 49552
+VERSION_HTTP_STATUS: 200
+VERSION_JSON: {"version": "0.4.1"}
+SERVER_STOP_STATUS: 143
+STDOUT:
+kc console listening on http://127.0.0.1:49552/ (Ctrl+C to stop)
+2026-10-20 13:09:36 - backend.api.app - WARNING - app.py:85 - Console static assets not found at backend.api.static/console; the dashboard is unavailable. From a source checkout, run `just console-sync` from the repository root, or install a release wheel with the assets bundled.
+2026-10-20 13:09:36 - backend.core.use_cases.monitor_snapshots - INFO - monitor_snapshots.py:623 - Monitor sync initial pass: 1 repositories have no snapshot yet.
+2026-10-20 13:09:36 - backend.core.use_cases.monitor_snapshots - INFO - monitor_snapshots.py:623 - Monitor sync initial pass: 1 repositories have no snapshot yet.
+INFO:     127.0.0.1:49572 - "GET /api/v1/agent-runner/console/version HTTP/1.1" 200 OK
+STDERR:
+INFO:     Started server process [25499]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://127.0.0.1:49552 (Press CTRL+C to quit)
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [25499]
