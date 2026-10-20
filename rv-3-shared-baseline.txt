@@ -1,0 +1,6 @@
+NEGATIVE CONTROL: removed the base-branch prerequisite from the shared baseline
+FAIL: missing required wording: every PRD-referenced companion file is committed and pushed to the base branch
+negative_control_exit=1
+GREEN COMMAND: same shared-baseline oracle against the packaged source file
+PASS: shared baseline includes PRD context and the base-branch prerequisite
+green_exit=0

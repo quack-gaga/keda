@@ -1,0 +1,56 @@
+negative_control_returncode=1
+pytest_environment=PYTEST_ADDOPTS=--no-testmon (runs every test in the target file)
+negative_control_output_summary:
+                (
+                    candidate
+                    for candidate in sorted(allowed_flags, key=len, reverse=True)
+                    if list(subcommand[: len(candidate)]) == list(candidate)
+                ),
+                None,
+            )
+            assert key is not None, f"{source_name}: 未收录的命令示例：{example}"
+            # ``--help`` 是所有子命令都支持的元 flag，不参与漂移判定。
+            unknown = _flags_of(tokens) - allowed_flags[key] - {"--help", "-h"}
+>           assert not unknown, f"{source_name}: {example} 使用了 --help 中不存在的 flag：{unknown}"
+E           AssertionError: references/create-issue.md: kc issue create --rv-not-a-real-flag tasks/pending/example.md 使用了 --help 中不存在的 flag：{'--rv-not-a-real-flag'}
+E           assert not {'--rv-not-a-real-flag'}
+
+tests/test_kedacode_operator_skill.py:687: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_kedacode_operator_skill.py::test_packaged_skill_command_examples_match_cli_help
+1 failed, 27 passed in 0.42s
+NEGATIVE CONTROL: uv run pytest tests/test_kedacode_operator_skill.py -q
+expected_fail=pytest rejects --rv-not-a-real-flag as a CLI flag absent from --help
+negative_control_exit=1
+GREEN COMMAND: uv run pytest tests/test_kedacode_operator_skill.py -q
+............................                                             [100%]
+28 passed in 0.30s
+green_pytest_exit=0
+GREEN COMMAND: git diff --name-only <merge-base main HEAD>
+base_commit=6b0d44a37849370df8c4bae9ec0ca6f0f6d1585a
+src/backend/engines/agent_runner/templates/skills/kedacode-operator/SKILL.md
+src/backend/engines/agent_runner/templates/skills/kedacode-operator/references/create-issue.md
+runner_manifest_local_only=1
+runner_manifest_in_diff=0
+scope_paths: skill_changes=2; test_changes_match_main=0; unexpected=0
+scope_non_allowed_paths=0
+GREEN: publish_prd_file implementation unchanged; no CLI source file changed
+green_diff_exit=0
+GREEN COMMAND: KEDACODE_SKILLS_DIR=<isolated> uv run kc skill install --force
+Installed remote template skills: prd, code-reviewer -> 
+/Users/zata/code/keda/.iar-worktrees/issue-291/tasks/evidence/issue-291/.skill-i
+nstall-root
+Overwrote user-owned skills (matching remote template): prd, code-reviewer
+Installed KedaCode operator skill: /Users/zata/code/keda/.iar-worktrees/issue-291/tasks/evidence/issue-291/.skill-install-root/kedacode-operator
+install_command_exit=0
+installed_managed_files=11; mismatched=0
+installed_copy_matches_packaged_source=true
+GREEN COMMAND: env -u KEDACODE_SKILLS_DIR uv run kc skill install --dry-run
+user_skill_dry_run_exit=0
+user_skill_roots_detected=8; current_matches=5; current_mismatches=3; refresh_pending=3
+post_merge_user_skill_refresh=pending
+GREEN COMMAND: uv run pytest -q --no-testmon <previously failing gate node ids>
+......                                                                   [100%]
+6 passed in 1.24s
+gate_regression_tests_exit=0
+previously_failing_gate_tests=passed (6)

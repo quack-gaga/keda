@@ -1,0 +1,6 @@
+NEGATIVE CONTROL: removed git status --porcelain from a temporary copy of item 6
+FAIL: missing required wording: run `git status --porcelain` before creating the Issue
+negative_control_exit=1
+GREEN COMMAND: same wording oracle against the packaged source file
+PASS: Confirm before acting item 6 satisfies all 6 wording assertions
+green_exit=0

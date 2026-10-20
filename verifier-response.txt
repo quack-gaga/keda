@@ -1,0 +1,254 @@
+# Independent verifier raw response
+# issue: #291
+# verifier agent: codex
+# builder sha: da580e914872c7412d7c82e54e46e40973775b27
+# parsed risk: yellow
+# verdict marker found: yes
+# response chars: 25577
+
+I’ll verify the packaged wording against the acceptance criteria, run the issue’s real evidence commands and their negative controls, and inspect the actual diff and installed-copy state. I’ll also read the repository’s validation guidance and the code-reviewer workflow before judging the result.
+
+[agent tool] command: /bin/zsh -lc 'cat docs/ai-standards/index.md'
+
+[agent tool] command execution: /bin/zsh -lc 'cat docs/ai-standards/index.md'
+
+[agent tool] command: /bin/zsh -lc 'cat docs/ai-standards/testing.md'
+
+[agent tool] command execution: /bin/zsh -lc 'cat docs/ai-standards/testing.md'
+
+[agent tool] command: /bin/zsh -lc 'cat /Users/zata/.codex/skills/code-reviewer/SKILL.md'
+
+[agent tool] command execution: /bin/zsh -lc 'cat /Users/zata/.codex/skills/code-reviewer/SKILL.md'
+
+[agent tool] command: /bin/zsh -lc 'git status --short && git show --stat --oneline --decorate --no-renames da580e914872c7412d7c82e54e46e40973775b27 && git diff da580e914872c7412d7c82e54e46e40973775b27''^ da580e914872c7412d7c82e54e46e40973775b27 --'
+
+[agent tool] command execution: /bin/zsh -lc 'git status --short && git show --stat --oneline --decorate --no-renames da580e914872c7412d7c82e54e46e40973775b27 && git diff da580e914872c7412d7c82e54e46e40973775b27''^ da580e914872c7412d7c82e54e46e40973775b27 --'
+
+[agent tool] command: /bin/zsh -lc 'git rev-parse HEAD'
+
+[agent tool] command execution: /bin/zsh -lc 'git rev-parse HEAD'
+
+[agent tool] command: /bin/zsh -lc 'cat /Users/zata/.codex/skills/code-reviewer/SKILL.md'
+
+[agent tool] command execution: /bin/zsh -lc 'cat /Users/zata/.codex/skills/code-reviewer/SKILL.md'
+
+[agent tool] command: /bin/zsh -lc 'git diff --name-only da580e914872c7412d7c82e54e46e40973775b27''^ da580e914872c7412d7c82e54e46e40973775b27 -- src/backend/engines/agent_runner/templates/skills/kedacode-operator/SKILL.md src/backend/engines/agent_runner/templates/skills/kedacode-operator/references/create-issue.md'
+
+[agent tool] command execution: /bin/zsh -lc 'git diff --name-only da580e914872c7412d7c82e54e46e40973775b27''^ da580e914872c7412d7c82e54e46e40973775b27 -- src/backend/engines/agent_runner/templates/skills/kedacode-operator/SKILL.md src/backend/engines/agent_runner/templates/skills/kedacode-operator/references/create-issue.md'
+
+[agent tool] command: /bin/zsh -lc 'git status --short'
+
+[agent tool] command execution: /bin/zsh -lc 'git status --short'
+
+[agent tool] command: /bin/zsh -lc 'git show --stat --format=fuller --no-renames --summary da580e914872c7412d7c82e54e46e40973775b27'
+
+[agent tool] command execution: /bin/zsh -lc 'git show --stat --format=fuller --no-renames --summary da580e914872c7412d7c82e54e46e40973775b27'
+
+[agent tool] command: /bin/zsh -lc 'rg --files tasks/evidence/issue-291 src/backend/engines/agent_runner/templates/skills/kedacode-operator | sort'
+
+[agent tool] command execution: /bin/zsh -lc 'rg --files tasks/evidence/issue-291 src/backend/engines/agent_runner/templates/skills/kedacode-operator | sort'
+The worktree is clean, but the supplied hash is a merge commit that also brings in a large `main` sync. I’m separating that merge’s unrelated changes from the issue-specific wording change before applying the “only two files” scope check. The referenced `tasks/evidence/issue-291/scripts` files are not present in the initial file listing, so I’m checking whether they exist elsewhere before relying on those oracles.
+
+[agent tool] command: /bin/zsh -lc 'git diff --name-only da580e914872c7412d7c82e54e46e40973775b27''^2 da580e914872c7412d7c82e54e46e40973775b27 --'
+
+[agent tool] command execution: /bin/zsh -lc 'git diff --name-only da580e914872c7412d7c82e54e46e40973775b27''^2 da580e914872c7412d7c82e54e46e40973775b27 --'
+
+[agent tool] command: /bin/zsh -lc "rg --files tasks | rg 'issue-291|companion|publish-prd'"
+
+[agent tool] command: /bin/zsh -lc "sed -n '1,240p' src/backend/engines/agent_runner/templates/skills/kedacode-operator/references/create-issue.md && sed -n '1,100p' src/backend/engines/agent_runner/templates/skills/kedacode-operator/SKILL.md"
+
+[agent tool] command execution: /bin/zsh -lc "rg --files tasks | rg 'issue-291|companion|publish-prd'"
+
+[agent tool] command execution: /bin/zsh -lc "sed -n '1,240p' src/backend/engines/agent_runner/templates/skills/kedacode-operator/references/create-issue.md && sed -n '1,100p' src/backend/engines/agent_runner/templates/skills/kedacode-operator/SKILL.md"
+
+[agent tool] command: /bin/zsh -lc 'git diff --name-only aa1d5955 da580e914872c7412d7c82e54e46e40973775b27 --'
+
+[agent tool] command: /bin/zsh -lc 'git log --graph --oneline --decorate -12'
+
+[agent tool] command execution: /bin/zsh -lc 'git diff --name-only aa1d5955 da580e914872c7412d7c82e54e46e40973775b27 --'
+
+[agent tool] command execution: /bin/zsh -lc 'git log --graph --oneline --decorate -12'
+
+[agent tool] command: /bin/zsh -lc 'git branch -a --contains da580e914872c7412d7c82e54e46e40973775b27'
+
+[agent tool] command execution: /bin/zsh -lc 'git branch -a --contains da580e914872c7412d7c82e54e46e40973775b27'
+
+[agent tool] command: /bin/zsh -lc 'git diff --no-ext-diff -- src/backend/engines/agent_runner/templates/skills/kedacode-operator/SKILL.md src/backend/engines/agent_runner/templates/skills/kedacode-operator/references/create-issue.md HEAD''^1 HEAD'
+
+[agent tool] command execution: /bin/zsh -lc 'git diff --no-ext-diff -- src/backend/engines/agent_runner/templates/skills/kedacode-operator/SKILL.md src/backend/engines/agent_runner/templates/skills/kedacode-operator/references/create-issue.md HEAD''^1 HEAD'
+
+[agent tool] command: /bin/zsh -lc 'git diff --no-ext-diff -- src/backend/engines/agent_runner/templates/skills/kedacode-operator/SKILL.md src/backend/engines/agent_runner/templates/skills/kedacode-operator/references/create-issue.md HEAD''^2 HEAD'
+
+[agent tool] command execution: /bin/zsh -lc 'git diff --no-ext-diff -- src/backend/engines/agent_runner/templates/skills/kedacode-operator/SKILL.md src/backend/engines/agent_runner/templates/skills/kedacode-operator/references/create-issue.md HEAD''^2 HEAD'
+
+[agent tool] command: /bin/zsh -lc 'git branch -avv'
+
+[agent tool] command: /bin/zsh -lc 'ls -la tasks/evidence/issue-291/scripts'
+
+[agent tool] command execution: /bin/zsh -lc 'ls -la tasks/evidence/issue-291/scripts'
+
+[agent tool] command: /bin/zsh -lc 'git log --oneline --follow -- src/backend/engines/agent_runner/templates/skills/kedacode-operator/references/create-issue.md'
+
+[agent tool] command: /bin/zsh -lc 'git log --oneline --follow -- src/backend/engines/agent_runner/templates/skills/kedacode-operator/SKILL.md'
+
+[agent tool] command: /bin/zsh -lc "rg -n -C 3 'Shared baselines|PRD handoff includes context|Confirm before acting|companion files|publish_prd_file|Refusing to publish PRD' src/backend/engines/agent_runner/templates/skills/kedacode-operator/SKILL.md src/backend/engines/agent_runner/templates/skills/kedacode-operator/references/create-issue.md src/backend/core/use_cases/create_issue_from_prd.py"
+
+[agent tool] command execution: /bin/zsh -lc "rg -n -C 3 'Shared baselines|PRD handoff includes context|Confirm before acting|companion files|publish_prd_file|Refusing to publish PRD' src/backend/engines/agent_runner/templates/skills/kedacode-operator/SKILL.md src/backend/engines/agent_runner/templates/skills/kedacode-operator/references/create-issue.md src/backend/core/use_cases/create_issue_from_prd.py"
+
+[agent tool] command execution: /bin/zsh -lc 'git branch -avv'
+
+[agent tool] command execution: /bin/zsh -lc 'git log --oneline --follow -- src/backend/engines/agent_runner/templates/skills/kedacode-operator/references/create-issue.md'
+
+[agent tool] command execution: /bin/zsh -lc 'git log --oneline --follow -- src/backend/engines/agent_runner/templates/skills/kedacode-operator/SKILL.md'
+
+[agent tool] command: /bin/zsh -lc "sed -n '1,260p' tasks/evidence/issue-291/scripts/rv-1-confirm-companions.py"
+
+[agent tool] command: /bin/zsh -lc "sed -n '1,240p' tasks/evidence/issue-291/scripts/rv-2-handoff-partial.py"
+
+[agent tool] command execution: /bin/zsh -lc "sed -n '1,260p' tasks/evidence/issue-291/scripts/rv-1-confirm-companions.py"
+
+[agent tool] command execution: /bin/zsh -lc "sed -n '1,240p' tasks/evidence/issue-291/scripts/rv-2-handoff-partial.py"
+
+[agent tool] command: /bin/zsh -lc "sed -n '1,360p' tasks/evidence/issue-291/scripts/rv-4-packaging-diff-test.py"
+
+[agent tool] command: /bin/zsh -lc "sed -n '1,240p' tasks/evidence/issue-291/scripts/rv-3-shared-baseline.py"
+
+[agent tool] command execution: /bin/zsh -lc "sed -n '1,360p' tasks/evidence/issue-291/scripts/rv-4-packaging-diff-test.py"
+
+[agent tool] command execution: /bin/zsh -lc "sed -n '1,240p' tasks/evidence/issue-291/scripts/rv-3-shared-baseline.py"
+
+[agent tool] command: /bin/zsh -lc "rg --files --hidden /Users/zata/.agents/skills /Users/zata/.codex/skills /Users/zata/.codebuddy/skills 2>/dev/null | rg 'kedacode-operator/(SKILL.md|references/create-issue.md)"'$'"'"
+
+[agent tool] command execution: /bin/zsh -lc "rg --files --hidden /Users/zata/.agents/skills /Users/zata/.codex/skills /Users/zata/.codebuddy/skills 2>/dev/null | rg 'kedacode-operator/(SKILL.md|references/create-issue.md)"'$'"'"
+
+[agent tool] command: /bin/zsh -lc 'git diff --stat HEAD''^1 HEAD -- src/backend/engines/agent_runner/templates/skills/kedacode-operator/SKILL.md src/backend/engines/agent_runner/templates/skills/kedacode-operator/references/create-issue.md && git diff --no-ext-diff HEAD''^1 HEAD -- src/backend/engines/agent_runner/templates/skills/kedacode-operator/SKILL.md src/backend/engines/agent_runner/templates/skills/kedacode-operator/references/create-issue.md'
+
+[agent tool] command: /bin/zsh -lc 'git diff --stat HEAD''^2 HEAD -- src/backend/engines/agent_runner/templates/skills/kedacode-operator/SKILL.md src/backend/engines/agent_runner/templates/skills/kedacode-operator/references/create-issue.md && git diff --no-ext-diff HEAD''^2 HEAD -- src/backend/engines/agent_runner/templates/skills/kedacode-operator/SKILL.md src/backend/engines/agent_runner/templates/skills/kedacode-operator/references/create-issue.md'
+
+[agent tool] command execution: /bin/zsh -lc 'git diff --stat HEAD''^1 HEAD -- src/backend/engines/agent_runner/templates/skills/kedacode-operator/SKILL.md src/backend/engines/agent_runner/templates/skills/kedacode-operator/references/create-issue.md && git diff --no-ext-diff HEAD''^1 HEAD -- src/backend/engines/agent_runner/templates/skills/kedacode-operator/SKILL.md src/backend/engines/agent_runner/templates/skills/kedacode-operator/references/create-issue.md'
+
+[agent tool] command execution: /bin/zsh -lc 'git diff --stat HEAD''^2 HEAD -- src/backend/engines/agent_runner/templates/skills/kedacode-operator/SKILL.md src/backend/engines/agent_runner/templates/skills/kedacode-operator/references/create-issue.md && git diff --no-ext-diff HEAD''^2 HEAD -- src/backend/engines/agent_runner/templates/skills/kedacode-operator/SKILL.md src/backend/engines/agent_runner/templates/skills/kedacode-operator/references/create-issue.md'
+The issue-specific merge-base diff is limited to the two requested skill files, and the wording covers the publication refusal and handoff completion semantics. The evidence scripts are present (they were hidden from the ordinary file listing because `tasks/evidence` is ignored). I’ve inspected the fourth script: it installs only to an isolated worktree directory, then checks whether user-level copies already match, so I’m checking that prerequisite before running it.
+
+[agent tool] command: /bin/zsh -lc "python -c 'from pathlib import Path; import hashlib; pairs=[(\"src/backend/engines/agent_runner/templates/skills/kedacode-operator/SKILL.md\", \"/Users/zata/.codex/skills/kedacode-operator/SKILL.md\"), (\"src/backend/engines/agent_runner/templates/skills/kedacode-operator/references/create-issue.md\", \"/Users/zata/.codex/skills/kedacode-operator/references/create-issue.md\"), (\"src/backend/engines/agent_runner/templates/skills/kedacode-operator/SKILL.md\", \"/Users/zata/.codebuddy/skills/kedacode-operator/SKILL.md\"), (\"src/backend/engines/agent_runner/templates/skills/kedacode-operator/references/create-issue.md\", \"/Users/zata/.codebuddy/skills/kedacode-operator/references/create-issue.md\")]; [(print(f\"{a} == {b}: {Path(a).read_bytes()==Path(b).read_bytes() if Path(b).exists() else False}; source_sha256={hashlib.sha256(Path(a).read_bytes()).hexdigest()}; installed_sha256={hashlib.sha256(Path(b).read_bytes()).hexdigest() if Path(b).exists() else 'MISSING'}\")) for a,b in pairs]'"
+
+[agent tool] command execution: /bin/zsh -lc "python -c 'from pathlib import Path; import hashlib; pairs=[(\"src/backend/engines/agent_runner/templates/skills/kedacode-operator/SKILL.md\", \"/Users/zata/.codex/skills/kedacode-operator/SKILL.md\"), (\"src/backend/engines/agent_runner/templates/skills/kedacode-operator/references/create-issue.md\", \"/Users/zata/.codex/skills/kedacode-operator/references/create-issue.md\"), (\"src/backend/engines/agent_runner/templates/skills/kedacode-operator/SKILL.md\", \"/Users/zata/.codebuddy/skills/kedacode-operator/SKILL.md\"), (\"src/backend/engines/agent_runner/templates/skills/kedacode-operator/references/create-issue.md\", \"/Users/zata/.codebuddy/skills/kedacode-operator/references/create-issue.md\")]; [(print(f\"{a} == {b}: {Path(a).read_bytes()==Path(b).read_bytes() if Path(b).exists() else False}; source_sha256={hashlib.sha256(Path(a).read_bytes()).hexdigest()}; installed_sha256={hashlib.sha256(Path(b).read_bytes()).hexdigest() if Path(b).exists() else 'MISSING'}\")) for a,b in pairs]'"
+
+[agent tool] command: /bin/zsh -lc 'find tasks/evidence/issue-291 -maxdepth 3 -type f -print'
+
+[agent tool] command execution: /bin/zsh -lc 'find tasks/evidence/issue-291 -maxdepth 3 -type f -print'
+
+[agent tool] command: /bin/zsh -lc 'git diff --name-only main...HEAD'
+
+[agent tool] command execution: /bin/zsh -lc 'git diff --name-only main...HEAD'
+
+[agent tool] command: /bin/zsh -lc "git show -s --format='%H %s' main && git merge-base main HEAD && git diff --name-only "'$(git merge-base main HEAD)'
+
+[agent tool] command execution: /bin/zsh -lc "git show -s --format='%H %s' main && git merge-base main HEAD && git diff --name-only "'$(git merge-base main HEAD)'
+
+[agent tool] command: /bin/zsh -lc 'UV_CACHE_DIR="${TMPDIR:-/tmp}/keda-issue-291-uv-cache" uv run python tasks/evidence/issue-291/scripts/rv-1-confirm-companions.py'
+
+[agent tool] command execution: /bin/zsh -lc 'UV_CACHE_DIR="${TMPDIR:-/tmp}/keda-issue-291-uv-cache" uv run python tasks/evidence/issue-291/scripts/rv-1-confirm-companions.py'
+
+[agent tool] command: /bin/zsh -lc 'UV_CACHE_DIR="${TMPDIR:-/tmp}/keda-issue-291-uv-cache" uv run python tasks/evidence/issue-291/scripts/rv-2-handoff-partial.py'
+
+[agent tool] command execution: /bin/zsh -lc 'UV_CACHE_DIR="${TMPDIR:-/tmp}/keda-issue-291-uv-cache" uv run python tasks/evidence/issue-291/scripts/rv-2-handoff-partial.py'
+
+[agent tool] command: /bin/zsh -lc 'UV_CACHE_DIR="${TMPDIR:-/tmp}/keda-issue-291-uv-cache" uv run python tasks/evidence/issue-291/scripts/rv-3-shared-baseline.py'
+
+[agent tool] command execution: /bin/zsh -lc 'UV_CACHE_DIR="${TMPDIR:-/tmp}/keda-issue-291-uv-cache" uv run python tasks/evidence/issue-291/scripts/rv-3-shared-baseline.py'
+The first three real-entry checks passed, and each negative control went red with its expected missing-wording message. My initial read-only hash check hit the sandbox’s default UV cache path, so I’m replacing that probe with `python3` and will use the issue-specific temporary cache for the packaging test.
+
+[agent tool] command: /bin/zsh -lc "python3 -c 'from pathlib import Path; import hashlib; pairs=[(\"src/backend/engines/agent_runner/templates/skills/kedacode-operator/SKILL.md\", \"/Users/zata/.codex/skills/kedacode-operator/SKILL.md\"), (\"src/backend/engines/agent_runner/templates/skills/kedacode-operator/references/create-issue.md\", \"/Users/zata/.codex/skills/kedacode-operator/references/create-issue.md\"), (\"src/backend/engines/agent_runner/templates/skills/kedacode-operator/SKILL.md\", \"/Users/zata/.codebuddy/skills/kedacode-operator/SKILL.md\"), (\"src/backend/engines/agent_runner/templates/skills/kedacode-operator/references/create-issue.md\", \"/Users/zata/.codebuddy/skills/kedacode-operator/references/create-issue.md\")]; [(print(f\"{a} == {b}: {Path(a).read_bytes()==Path(b).read_bytes() if Path(b).exists() else False}; source_sha256={hashlib.sha256(Path(a).read_bytes()).hexdigest()}; installed_sha256={hashlib.sha256(Path(b).read_bytes()).hexdigest() if Path(b).exists() else 'MISSING'}\")) for a,b in pairs]'"
+
+[agent tool] command execution: /bin/zsh -lc "python3 -c 'from pathlib import Path; import hashlib; pairs=[(\"src/backend/engines/agent_runner/templates/skills/kedacode-operator/SKILL.md\", \"/Users/zata/.codex/skills/kedacode-operator/SKILL.md\"), (\"src/backend/engines/agent_runner/templates/skills/kedacode-operator/references/create-issue.md\", \"/Users/zata/.codex/skills/kedacode-operator/references/create-issue.md\"), (\"src/backend/engines/agent_runner/templates/skills/kedacode-operator/SKILL.md\", \"/Users/zata/.codebuddy/skills/kedacode-operator/SKILL.md\"), (\"src/backend/engines/agent_runner/templates/skills/kedacode-operator/references/create-issue.md\", \"/Users/zata/.codebuddy/skills/kedacode-operator/references/create-issue.md\")]; [(print(f\"{a} == {b}: {Path(a).read_bytes()==Path(b).read_bytes() if Path(b).exists() else False}; source_sha256={hashlib.sha256(Path(a).read_bytes()).hexdigest()}; installed_sha256={hashlib.sha256(Path(b).read_bytes()).hexdigest() if Path(b).exists() else 'MISSING'}\")) for a,b in pairs]'"
+
+[agent tool] command: /bin/zsh -lc 'UV_CACHE_DIR="${TMPDIR:-/tmp}/keda-issue-291-uv-cache" uv run python tasks/evidence/issue-291/scripts/rv-4-packaging-diff-test.py'
+
+[agent tool] command execution: /bin/zsh -lc 'UV_CACHE_DIR="${TMPDIR:-/tmp}/keda-issue-291-uv-cache" uv run python tasks/evidence/issue-291/scripts/rv-4-packaging-diff-test.py'
+
+[agent tool] command: /bin/zsh -lc 'cat tasks/evidence/issue-291/evidence.json'
+
+[agent tool] command execution: /bin/zsh -lc 'cat tasks/evidence/issue-291/evidence.json'
+
+[agent tool] command: /bin/zsh -lc "sed -n '1,240p' tasks/evidence/issue-291/verifier-response.txt"
+
+[agent tool] command execution: /bin/zsh -lc "sed -n '1,240p' tasks/evidence/issue-291/verifier-response.txt"
+
+[agent tool] command: /bin/zsh -lc "rg -n 'CODEBUDDY_SKILL_DIR|KEDACODE_SKILLS_DIR|skill_dirs|skill_roots|user.*skills|\\.codebuddy' src/backend"
+
+[agent tool] command: /bin/zsh -lc "rg -n 'KEDACODE_SKILLS_DIR|\\.codebuddy/skills|\\.codex/skills|skills_root|skill install' src/backend docs tests/test_kedacode_operator_skill.py"
+
+[agent tool] command execution: /bin/zsh -lc "rg -n 'CODEBUDDY_SKILL_DIR|KEDACODE_SKILLS_DIR|skill_dirs|skill_roots|user.*skills|\\.codebuddy' src/backend"
+
+[agent tool] command execution: /bin/zsh -lc "rg -n 'KEDACODE_SKILLS_DIR|\\.codebuddy/skills|\\.codex/skills|skills_root|skill install' src/backend docs tests/test_kedacode_operator_skill.py"
+
+[agent tool] command: /bin/zsh -lc 'git status --short && git diff --name-only && git diff --name-only main...HEAD'
+
+[agent tool] command: /bin/zsh -lc 'UV_CACHE_DIR="${TMPDIR:-/tmp}/keda-issue-291-uv-cache" uv run pytest tests/test_kedacode_operator_skill.py -q'
+
+[agent tool] command execution: /bin/zsh -lc 'git status --short && git diff --name-only && git diff --name-only main...HEAD'
+
+[agent tool] command execution: /bin/zsh -lc 'UV_CACHE_DIR="${TMPDIR:-/tmp}/keda-issue-291-uv-cache" uv run pytest tests/test_kedacode_operator_skill.py -q'
+
+[agent tool] command: /bin/zsh -lc "sed -n '380,430p' src/backend/engines/agent_runner/remote_template_skills.py"
+
+[agent tool] command execution: /bin/zsh -lc "sed -n '380,430p' src/backend/engines/agent_runner/remote_template_skills.py"
+
+[agent tool] command: /bin/zsh -lc "sed -n '290,335p' src/backend/core/shared/models/agent_spec.py && sed -n '535,580p' src/backend/core/shared/models/agent_spec.py"
+
+[agent tool] command execution: /bin/zsh -lc "sed -n '290,335p' src/backend/core/shared/models/agent_spec.py && sed -n '535,580p' src/backend/core/shared/models/agent_spec.py"
+
+[agent tool] command: /bin/zsh -lc "rg -n 'codebuddy|user_skills_dir' src/backend/core/shared/models/agent_spec.py src/backend/engines/agent_runner/remote_template_skills.py"
+
+[agent tool] command execution: /bin/zsh -lc "rg -n 'codebuddy|user_skills_dir' src/backend/core/shared/models/agent_spec.py src/backend/engines/agent_runner/remote_template_skills.py"
+
+[agent tool] command: /bin/zsh -lc "sed -n '530,565p' docs/guides/agent-runner.md && sed -n '1,120p' src/backend/api/cli_skill.py"
+
+[agent tool] command execution: /bin/zsh -lc "sed -n '530,565p' docs/guides/agent-runner.md && sed -n '1,120p' src/backend/api/cli_skill.py"
+
+[agent tool] command: /bin/zsh -lc "rg -n 'CODEBUDDY|codebuddy' config.toml src/backend/core/shared/models/agent_spec.py src/backend/core/shared/product_identity.py"
+
+[agent tool] command execution: /bin/zsh -lc "rg -n 'CODEBUDDY|codebuddy' config.toml src/backend/core/shared/models/agent_spec.py src/backend/core/shared/product_identity.py"
+
+[agent tool] command: /bin/zsh -lc "find tasks/evidence/issue-291 -maxdepth 3 -type f -exec file --mime {} \\;"
+
+[agent tool] command execution: /bin/zsh -lc "find tasks/evidence/issue-291 -maxdepth 3 -type f -exec file --mime {} \\;"
+
+[agent tool] command: /bin/zsh -lc 'diff -u src/backend/engines/agent_runner/templates/skills/kedacode-operator/references/create-issue.md /Users/zata/.codebuddy/skills/kedacode-operator/references/create-issue.md'
+
+[agent tool] command: /bin/zsh -lc 'diff -u src/backend/engines/agent_runner/templates/skills/kedacode-operator/SKILL.md /Users/zata/.codebuddy/skills/kedacode-operator/SKILL.md'
+
+[agent tool] command execution: /bin/zsh -lc 'diff -u src/backend/engines/agent_runner/templates/skills/kedacode-operator/references/create-issue.md /Users/zata/.codebuddy/skills/kedacode-operator/references/create-issue.md'
+
+[agent tool] command execution: /bin/zsh -lc 'diff -u src/backend/engines/agent_runner/templates/skills/kedacode-operator/SKILL.md /Users/zata/.codebuddy/skills/kedacode-operator/SKILL.md'
+
+[agent tool] command: /bin/zsh -lc 'cat tasks/evidence/issue-291/rv-1-confirm-companions.txt && cat tasks/evidence/issue-291/rv-2-handoff-partial.txt && cat tasks/evidence/issue-291/rv-3-shared-baseline.txt && cat tasks/evidence/issue-291/rv-4-packaging-diff-test.txt'
+
+[agent tool] command execution: /bin/zsh -lc 'cat tasks/evidence/issue-291/rv-1-confirm-companions.txt && cat tasks/evidence/issue-291/rv-2-handoff-partial.txt && cat tasks/evidence/issue-291/rv-3-shared-baseline.txt && cat tasks/evidence/issue-291/rv-4-packaging-diff-test.txt'
+
+[agent tool] command: /bin/zsh -lc 'env -u KEDACODE_SKILLS_DIR UV_CACHE_DIR="${TMPDIR:-/tmp}/keda-issue-291-uv-cache" uv run kc skill install --dry-run'
+
+[agent tool] command execution: /bin/zsh -lc 'env -u KEDACODE_SKILLS_DIR UV_CACHE_DIR="${TMPDIR:-/tmp}/keda-issue-291-uv-cache" uv run kc skill install --dry-run'
+The fresh RV-4 run passed, but its user-copy audit checks a fixed list of five roots. A real `kc skill install --dry-run` detects eight roots and reports three old packaged copies for refresh; I directly confirmed the `.codebuddy` copy differs from the current source. The Codex copy matches. I’m doing a final tree check now; the actual user-level refresh remains a post-merge action, so I have not written outside the worktree.
+
+[agent tool] command: /bin/zsh -lc 'test ! -e tasks/evidence/issue-291/.skill-install-root && echo isolated_install_root_cleaned; git diff --quiet main...HEAD -- src/backend/core/use_cases/create_issue_from_prd.py && echo publish_prd_file_unchanged'
+
+[agent tool] command execution: /bin/zsh -lc 'test ! -e tasks/evidence/issue-291/.skill-install-root && echo isolated_install_root_cleaned; git diff --quiet main...HEAD -- src/backend/core/use_cases/create_issue_from_prd.py && echo publish_prd_file_unchanged'
+
+[agent tool] command: /bin/zsh -lc 'git diff --name-only main...HEAD && git rev-parse HEAD && git merge-base main HEAD'
+
+[agent tool] command execution: /bin/zsh -lc 'git diff --name-only main...HEAD && git rev-parse HEAD && git merge-base main HEAD'
+
+[agent tool] command: /bin/zsh -lc 'git status --porcelain=v2 && git diff --cached --name-only && git diff --name-only'
+
+[agent tool] command execution: /bin/zsh -lc 'git status --porcelain=v2 && git diff --cached --name-only && git diff --name-only'
+## 结论：YELLOW
+
+文案符合要求：创建前检查 companion files、提交并推送、不要先暂存非 PRD 文件；创建 Issue 本身不算完成，遗留文件必须报告为 `partial`。共享基线也要求创建前确认这些文件已到 base branch，见 [create-issue.md](/Users/zata/code/keda/.iar-worktrees/issue-291/src/backend/engines/agent_runner/templates/skills/kedacode-operator/references/create-issue.md:14) 和 [SKILL.md](/Users/zata/code/keda/.iar-worktrees/issue-291/src/backend/engines/agent_runner/templates/skills/kedacode-operator/SKILL.md:30)。
+
+四个 RV 脚本均通过；RV-1 至 RV-3 的负控按预期退出 1。RV-4 的无效 flag 负控得到 `1 failed, 27 passed`，恢复后 Skill 测试为 **28 passed**；六项回归测试也通过。隔离目录中的真实 `kc skill install --force` 成功，11 个受管文件与随包源一致。`git diff --name-only main...HEAD` 仅列出两份 Skill 文件，工作树没有未提交改动，`publish_prd_file` 未变。
+
+剩余事项是合并后的用户级刷新尚未执行。`kc skill install --dry-run` 显示它会刷新 `.codebuddy`、`.pi` 和 `.qoder-cn` 的旧副本；我直接确认 `.codebuddy` 副本目前与随包源不同。当前 Codex 副本一致。RV-4 的用户副本检查只覆盖五个根，不能证明全部检测到的根都已同步。分支尚未合并，因此本次没有执行会写入用户目录的安装。四份 `rv-*.txt` 和 `evidence.json` 均为文本证据；没有图像、视频或音频文件。旧 `verifier-response.txt` 对应先前提交，不能代表本次结果。
+
+<!-- iar:verifier-verdict risk=yellow -->

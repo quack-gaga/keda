@@ -1,0 +1,6 @@
+NEGATIVE CONTROL: replaced the partial reporting requirement with pending
+FAIL: missing required wording: report the result as `partial`
+negative_control_exit=1
+GREEN COMMAND: same handoff oracle against the packaged source file
+PASS: Execute and never do defines incomplete handoffs as partial
+green_exit=0
